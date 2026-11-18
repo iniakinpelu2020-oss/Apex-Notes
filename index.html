@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Apex Notes</title>
+<meta name="description" content="Offline-first markdown notes for ApexOS. Everything stays on this device.">
+<meta name="theme-color" content="#080a12">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <img src="./icons/icon-192.png" alt="" width="28" height="28">
+    <span>Apex Notes</span>
+  </div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search notes" autocomplete="off" aria-label="Search notes">
+    <button id="newNote" class="primary" type="button">New note</button>
+  </div>
+</header>
+
+<main class="shell">
+  <aside class="pane list" aria-label="Note list">
+    <p class="count" id="count">0 notes</p>
+    <ul id="noteList"></ul>
+    <p class="hint" id="emptyList" hidden>No notes here yet.</p>
+  </aside>
+
+  <section class="pane editor" id="editorPane" hidden>
+    <div class="ed-head">
+      <input id="title" type="text" placeholder="Untitled note" autocomplete="off" aria-label="Note title">
+      <div class="ed-actions">
+        <button id="exportOne" type="button">Export .md</button>
+        <button id="deleteNote" class="danger" type="button">Delete</button>
+      </div>
+    </div>
+    <textarea id="body" placeholder="Write in Markdown. Saves as you type." spellcheck="true" aria-label="Note body"></textarea>
+    <footer class="meta">
+      <span id="wordCount">0 words</span>
+      <span id="saved">Saved</span>
+    </footer>
+  </section>
+
+  <section class="pane blank" id="blankPane">
+    <h2>No note selected</h2>
+    <p>Pick a note on the left, or start a new one. Notes are stored in this browser only &mdash; nothing is uploaded.</p>
+    <button id="newNote2" class="primary" type="button">New note</button>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<script src="./app.js"></script>
+</body>
+</html>

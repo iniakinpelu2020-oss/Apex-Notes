@@ -1,0 +1,81 @@
+:root{
+  --bg:#080a12; --panel:#0e1220; --panel-2:#131828; --line:#232a3d;
+  --ink:#e8ecff; --muted:#8b95b3; --accent:#7c8cff; --danger:#ff6b81;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  display:flex; flex-direction:column; height:100dvh; overflow:hidden;
+}
+.bar{
+  display:flex; align-items:center; gap:14px; padding:10px 14px;
+  background:linear-gradient(180deg,#0d1220,#0a0e18); border-bottom:1px solid var(--line);
+  flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:9px; font-weight:650; letter-spacing:.2px}
+.brand img{border-radius:8px}
+.tools{display:flex; gap:8px; margin-left:auto; flex:1; justify-content:flex-end; min-width:220px}
+input[type=search],input[type=text],#body,button{font:inherit; color:inherit}
+input[type=search]{
+  background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  padding:8px 11px; min-width:0; width:min(280px,46vw);
+}
+input[type=search]:focus,input[type=text]:focus,#body:focus{outline:2px solid var(--accent); outline-offset:1px}
+button{
+  background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
+  padding:8px 13px; cursor:pointer; white-space:nowrap;
+}
+button:hover{border-color:#39425e}
+button.primary{background:var(--accent); border-color:var(--accent); color:#0a0d18; font-weight:650}
+button.primary:hover{filter:brightness(1.08)}
+button.danger{color:var(--danger); border-color:#43202b}
+button.danger:hover{background:#2a1119}
+
+.shell{flex:1; display:grid; grid-template-columns:308px 1fr; min-height:0}
+.pane{min-height:0; overflow:auto}
+.list{border-right:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column}
+.count{margin:0; padding:10px 14px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line)}
+#noteList{list-style:none; margin:0; padding:6px; display:flex; flex-direction:column; gap:4px}
+#noteList li button{
+  width:100%; text-align:left; display:block; background:transparent; border:1px solid transparent;
+  border-radius:11px; padding:9px 11px;
+}
+#noteList li button:hover{background:var(--panel-2)}
+#noteList li button[aria-current=true]{background:#1a2140; border-color:#2d3763}
+.n-title{display:block; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.n-sub{display:block; font-size:12.5px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.hint{padding:16px 14px; color:var(--muted); font-size:13.5px}
+
+.editor{display:flex; flex-direction:column; padding:14px 16px 10px; gap:10px}
+.ed-head{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+#title{
+  flex:1; min-width:180px; background:transparent; border:0; border-bottom:1px solid var(--line);
+  padding:6px 2px; font-size:19px; font-weight:650;
+}
+.ed-actions{display:flex; gap:8px}
+#body{
+  flex:1; min-height:0; resize:none; background:var(--panel); border:1px solid var(--line);
+  border-radius:var(--radius); padding:14px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:14.5px; line-height:1.65;
+}
+.meta{display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); padding:0 2px}
+.blank{margin:auto; max-width:420px; text-align:center; padding:32px; color:var(--muted)}
+.blank h2{color:var(--ink); font-size:18px; margin:0 0 8px}
+.blank p{margin:0 0 16px}
+
+.toast{
+  position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+  background:#1b2136; border:1px solid var(--line); border-radius:999px;
+  padding:8px 16px; font-size:13px; color:var(--ink); box-shadow:0 8px 24px #0008;
+}
+[hidden]{display:none!important}
+
+@media (max-width:720px){
+  .shell{grid-template-columns:1fr; grid-template-rows:auto 1fr}
+  .list{border-right:0; border-bottom:1px solid var(--line); max-height:38vh}
+  .tools{width:100%}
+  input[type=search]{flex:1; width:auto}
+}
