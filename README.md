@@ -1,39 +1,37 @@
 # Apex Notes
 
-Markdown notes that sync between your own devices, with no account you do not control.
+Offline-first markdown notes for ApexOS. Vanilla HTML/CSS/JS, no build step, no network calls,
+relative `./` paths so it also runs from `/apps/notes/` inside the ApexOS bundle.
 
-**Status: not built.**
+## Run
 
-## What it should do
+```sh
+python3 -m http.server 8080
+# then open http://127.0.0.1:8080/
+```
 
-- Write in Markdown, with a live preview.
-- Search across everything, instantly, offline.
-- Sinc between phone and laptop without a subscription.
+Service workers need `http://localhost` or HTTPS.
 
-## The constraint that shapes it
+## Controls
 
-Firestore's free tier — 1 GiB stored, 20,000 writes a day — is far more than a lifetime of
-notes. Storage is not the problem. **Conflicts are the problem.**
+| control | what it does |
+|---|---|
+| New note | Creates a blank note and focuses the title |
+| Search | Filters by title and body text (Ctrl/Cmd+K) |
+| Export .md | Downloads the open note as Markdown |
+| Delete | Removes the open note after a confirmation |
+| Ctrl/Cmd+S | Forces a save and confirms it |
 
-If two devices edit the same note offline, last-write-wins silently deletes work. That is
-the single bug that makes people abandon a notes app, and it must be designed for on day
-one:
+## Storage
 
-- keep a version number per note and refuse a write that is based on an old version,
-- or store an append-only log of edits and fold them together when syncing.
+Notes live in `localStorage` under `apex.notes.v1` as
+`[{ id, title, body, updated }]`. Saves are debounced 350 ms; the footer reports the state.
+Nothing is uploaded, and clearing site data deletes the notes.
 
-## The design I would pick
+## Bundling into ApexOS
 
-Local-first. Every note lives in IndexedDB on the device and is the source of truth for
-reading. Syncing is a background reconciliation, not a requirement. That way the app is
-fast, works on a plane, and a dead network never means a blank screen.
+`Apexos`/`Apex` clones this repo into `apps/notes/` (roster entry `Apex-Notes notes`).
+Keep every path relative (`./styles.css`, not `/styles.css`) or the app breaks under `/apps/notes/`.
 
-## What you need to do
-
-1. Nothing new. Same Firebase project as the rest.
-
-## First three steps
-
-1. An editor with local storage and no sync at all. Use it for a week and see if it holds.
-2. Sync, with the version check, and a visible "conflict" screen when it triggers.
-3. Export to plain `.md` files, so leaving is always possible.
+When the shell files change, bump `CACHE` in `sw.js` (`apex-notes-v1` → `v2`) so installed clients
+pick up the new assets instead of serving the old cache.
